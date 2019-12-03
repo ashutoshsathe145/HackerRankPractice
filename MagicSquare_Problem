@@ -1,0 +1,108 @@
+import java.io.*;
+import java.math.*;
+import java.security.*;
+import java.text.*;
+import java.util.*;
+import java.util.concurrent.*;
+import java.util.regex.*;
+
+	public class MagicSquare {
+		
+		static int[] find_one_position(int[][] s)
+		{
+			int length = s.length;
+			int [] pos = new int [2];
+			for(int i=0;i<length;i++)
+			{
+				for(int j=0;j<length;j++)
+				{
+					if(s[i][j]==1)
+						{pos[0] = i;pos[1]=j;return pos;}
+					
+				}
+			}
+			return pos;
+		}
+	    // Complete the formingMagicSquare function below.
+	    static int formingMagicSquare(int[][] s) {
+	    	int n = s.length;
+	    	int calculate_magic_number = n * (((n*n)+1)/2);
+	    	int final_addition =0;
+	    	int [] pos = find_one_position(s);
+	    	int start_pos_i = pos[0];
+	    	int start_pos_j = pos[1];
+	    	for(int num=1;num<=n*n;)
+	    	{	
+	    		if(start_pos_i==-1 && start_pos_j==n) //3rd condition
+	    		{
+	    			start_pos_j = n-2;
+	    			start_pos_i = 0;
+	    		}
+	    		else  // 1st condition
+	    		{
+	    			if(start_pos_j == n)
+	    				start_pos_j = 0;
+	    			if(start_pos_i<0)
+	    				start_pos_i = 0;
+	    		}
+	    		/*if(s[start_pos_i][start_pos_j]!=0)
+	    		{
+	    			start_pos_j -= 2;
+	    			start_pos_i++;
+	    			continue;
+	    		}
+	    		else
+	    		{*/
+	    			int temp = s[start_pos_i][start_pos_j];
+	    			if(temp != num)
+	    			{
+	    				int add =0;
+	    				for(int k=0;k<n;k++)
+	    				{
+	    					if(k!=start_pos_j)
+	    						add+=s[start_pos_i][k];
+	    				}
+	    				int sub = calculate_magic_number - add;
+	    				s[start_pos_i][start_pos_j] = Math.abs(sub -temp);
+	    				final_addition += Math.abs(sub -temp);
+	    				
+	    			}
+	    			else	
+	    				s[start_pos_i][start_pos_j] = num;
+	    		//}
+	    		start_pos_j++;
+	    		start_pos_i--;
+	    		num++;
+	    	}
+	    	
+	    	return final_addition;
+	    		
+	    }
+
+	    private static final Scanner scanner = new Scanner(System.in);
+
+	    public static void main(String[] args) throws IOException {
+	       // BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(System.getenv("OUTPUT_PATH")));
+
+	        int[][] s = new int[3][3];
+
+	        for (int i = 0; i < 3; i++) {
+	            String[] sRowItems = scanner.nextLine().split(" ");
+	            scanner.skip("(\r\n|[\n\r\u2028\u2029\u0085])?");
+
+	            for (int j = 0; j < 3; j++) {
+	                int sItem = Integer.parseInt(sRowItems[j]);
+	                s[i][j] = sItem;
+	            }
+	        }
+
+	        int result = formingMagicSquare(s);
+	        System.out.println(result);
+	        //bufferedWriter.write(String.valueOf(result));
+	        //bufferedWriter.newLine();
+
+	        //bufferedWriter.close();
+
+	        scanner.close();
+	    }
+	}
