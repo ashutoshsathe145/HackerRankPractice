@@ -1,0 +1,26 @@
+class GraphLL{
+	int V;
+	GraphLL [] adjArrayList;
+	
+	public GraphLL () {
+		
+	}
+	public GraphLL(int V) {
+		this.V = V;
+		
+		for(int i=0;i<V;i++) {
+			adjArrayList[i]=new GraphLL();
+		}
+	}
+	static void addEdge(GraphLL graph, int src, int dest) {
+		graph.adjArrayList[src] = 
+	}
+}
+public class GraphImplLL {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+	}
+
+}
